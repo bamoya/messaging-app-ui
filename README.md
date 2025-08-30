@@ -1,59 +1,63 @@
-# WhatsappCloneUi
+# Messaging App UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
+This is the frontend for the Messaging App, a real-time messaging application. It is a single-page application (SPA) built with Angular.
 
-## Development server
+For more information about the overall project architecture, see the [root README.md](../../README.md).
 
-To start a local development server, run:
+## Key Components
+
+*   **`main` page:** The main component that orchestrates the different parts of the chat application.
+*   **`chat-list` component:** Displays the list of chats for the current user.
+*   **Services:**
+    *   `ChatService`, `MessageService`, `UserService`: These services are generated from the backend's OpenAPI specification and are used to communicate with the API.
+    *   `KeycloakService`: Initializes and manages the Keycloak instance for authentication.
+*   **Interceptors:**
+    *   `KeycloakHttpInterceptor`: Intercepts outgoing HTTP requests and adds the Keycloak access token to the `Authorization` header.
+*   **API Client Generation:** The `ng-openapi-gen` tool is used to generate the API client code from the `openapi.json` file. This ensures that the frontend and backend are always in sync.
+
+## Technologies Used
+
+*   **Angular**
+*   **Bootstrap**
+*   **Keycloak-js**
+*   **SockJS & STOMPjs**
+*   **ng-openapi-gen**
+
+## Getting Started
+
+### Prerequisites
+
+*   Node.js and npm
+*   Angular CLI
+
+### Installation
+
+1.  Install the dependencies:
+
+    ```bash
+    npm install
+    ```
+
+### Configuration
+
+1.  **API URL:** The API URL is configured in the `src/app/services/api-configuration.ts` file. By default, it is set to `http://localhost:8080`.
+
+2.  **Keycloak:** The Keycloak configuration is located in the `src/app/utils/keycloak/KeycloakService.ts` file. You will need to update the `url`, `realm`, and `clientId` to match your Keycloak server configuration.
+
+### Running the Application
+
+You can run the application using the Angular CLI:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The application will be available at `http://localhost:4200`.
 
-## Code scaffolding
+## API Client Generation
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The API client is generated from the `openapi.json` file located in the `src/openapi` directory. To regenerate the client, run the following command:
 
 ```bash
-ng generate --help
+npm run api-gen
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

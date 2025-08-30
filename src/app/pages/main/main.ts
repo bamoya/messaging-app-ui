@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewChecked,
   Component,
@@ -6,17 +7,16 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 import { ChatList } from '../../components/chat-list/chat-list';
+import { MEDIA_MESSAGES_TYPE } from '../../constants/constants';
 import { ChatResponse, MessageRequest, MessageResponse } from '../../services/models';
 import { ChatService, MessageService } from '../../services/services';
 import { KeycloakService } from '../../utils/keycloak/KeycloakService';
-import { CommonModule } from '@angular/common';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
-import SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
 import { Notification } from './models/notification';
-import { MEDIA_MESSAGES_TYPE } from '../../constants/constants';
 
 @Component({
   selector: 'app-main',
@@ -96,16 +96,47 @@ export class Main implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  uploadMedia(event: any) {
-    const file = event.files[0];
-    this.messageService.uploadFile(file).subscribe({
-      next: (response) => {
-        console.log('File uploaded successfully', response);
-      },
-      error: (error) => {
-        console.error('Error uploading file', error);
-      },
-    });
+  uploadMedia(target: EventTarget | null) {
+    const file = this.extarctFileFromTarget(target);
+    if (file !== null) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+
+          const mediaLines = reader.result.toString().split(',')[1];
+
+          this.messageService.uploadFile({
+            'chat-id': this.selectedChat.id as string,
+            body: {
+              file: file
+            }
+          }).subscribe({
+            next: () => {
+              const message: MessageResponse = {
+                senderId: this.getSenderId(),
+                receiverId: this.selectedChat.receiverId,
+                content: 'Attachment',
+                type: 'IMAGE',
+                state: 'SENT',
+                media: [mediaLines],
+                createdAt: new Date().toString()
+              };
+              this.chatMessages.push(message);
+              
+            }
+          });
+        }
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+
+  extarctFileFromTarget(target: EventTarget | null) {
+    const htmlInputTarget = target as HTMLInputElement;
+    if (target === null || htmlInputTarget.files === null) {
+      return null;
+    }
+    return htmlInputTarget.files[0];
   }
 
   isSelfMessage(message: MessageResponse) {
@@ -253,6 +284,7 @@ export class Main implements OnInit, AfterViewChecked, OnDestroy {
         lastMessage: content,
         lastMessageTime: createdAt,
         name: chatName,
+        unreadCount: 1,
       };
       this.chats.unshift(chat);
     }
