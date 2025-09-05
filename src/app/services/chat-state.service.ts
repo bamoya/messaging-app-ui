@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChatResponse } from './models';
@@ -45,9 +44,7 @@ export class ChatStateService {
 
   sortChats() {
     this.chats = this.chats.sort(
-      (b, a) =>
-        Date.parse(a.lastMessageTime as string) -
-        Date.parse(b.lastMessageTime as string),
+      (b, a) => Date.parse(a.lastMessageTime as string) - Date.parse(b.lastMessageTime as string),
     );
   }
 }

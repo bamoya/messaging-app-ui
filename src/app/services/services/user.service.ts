@@ -30,7 +30,10 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllUsersExceptSelf$Response(params?: GetAllUsersExceptSelf$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponse>>> {
+  getAllUsersExceptSelf$Response(
+    params?: GetAllUsersExceptSelf$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<Array<UserResponse>>> {
     return getAllUsersExceptSelf(this.http, this.rootUrl, params, context);
   }
 
@@ -40,10 +43,12 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllUsersExceptSelf(params?: GetAllUsersExceptSelf$Params, context?: HttpContext): Observable<Array<UserResponse>> {
+  getAllUsersExceptSelf(
+    params?: GetAllUsersExceptSelf$Params,
+    context?: HttpContext,
+  ): Observable<Array<UserResponse>> {
     return this.getAllUsersExceptSelf$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<UserResponse>>): Array<UserResponse> => r.body)
+      map((r: StrictHttpResponse<Array<UserResponse>>): Array<UserResponse> => r.body),
     );
   }
-
 }

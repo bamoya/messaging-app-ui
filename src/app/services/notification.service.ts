@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { WebSocketService } from './web-socket.service';
 import { Notification } from '../pages/main/models/notification';
@@ -58,7 +57,9 @@ export class NotificationService {
           break;
       }
     } else if (chatId && this.chatStateService.chats.find((chat) => chat.id === chatId)) {
-      const destChat = this.chatStateService.chats.find((chat) => chat.id === chatId) as ChatResponse;
+      const destChat = this.chatStateService.chats.find(
+        (chat) => chat.id === chatId,
+      ) as ChatResponse;
       if (type === 'MESSAGE') {
         switch (messageType) {
           case 'TEXT':
@@ -76,7 +77,11 @@ export class NotificationService {
         }
         this.chatStateService.sortChats();
       }
-    } else if (chatId && !this.chatStateService.chats.find((chat) => chat.id === chatId) && type !== 'SEEN') {
+    } else if (
+      chatId &&
+      !this.chatStateService.chats.find((chat) => chat.id === chatId) &&
+      type !== 'SEEN'
+    ) {
       // add new chat
       const chat: ChatResponse = {
         id: chatId,

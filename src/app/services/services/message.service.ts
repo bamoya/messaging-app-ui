@@ -36,7 +36,10 @@ export class MessageService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  sendMessage$Response(params: SendMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  sendMessage$Response(
+    params: SendMessage$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<void>> {
     return sendMessage(this.http, this.rootUrl, params, context);
   }
 
@@ -48,7 +51,7 @@ export class MessageService extends BaseService {
    */
   sendMessage(params: SendMessage$Params, context?: HttpContext): Observable<void> {
     return this.sendMessage$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<void>): void => r.body),
     );
   }
 
@@ -61,7 +64,10 @@ export class MessageService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateMessageStatusToSeen$Response(params: UpdateMessageStatusToSeen$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  updateMessageStatusToSeen$Response(
+    params: UpdateMessageStatusToSeen$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<void>> {
     return updateMessageStatusToSeen(this.http, this.rootUrl, params, context);
   }
 
@@ -71,9 +77,12 @@ export class MessageService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateMessageStatusToSeen(params: UpdateMessageStatusToSeen$Params, context?: HttpContext): Observable<void> {
+  updateMessageStatusToSeen(
+    params: UpdateMessageStatusToSeen$Params,
+    context?: HttpContext,
+  ): Observable<void> {
     return this.updateMessageStatusToSeen$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<void>): void => r.body),
     );
   }
 
@@ -86,7 +95,10 @@ export class MessageService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  uploadFile$Response(params: UploadFile$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  uploadFile$Response(
+    params: UploadFile$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<void>> {
     return uploadFile(this.http, this.rootUrl, params, context);
   }
 
@@ -98,7 +110,7 @@ export class MessageService extends BaseService {
    */
   uploadFile(params: UploadFile$Params, context?: HttpContext): Observable<void> {
     return this.uploadFile$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<void>): void => r.body),
     );
   }
 
@@ -111,7 +123,10 @@ export class MessageService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getChatMessages$Response(params: GetChatMessages$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
+  getChatMessages$Response(
+    params: GetChatMessages$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<Array<MessageResponse>>> {
     return getChatMessages(this.http, this.rootUrl, params, context);
   }
 
@@ -121,10 +136,12 @@ export class MessageService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getChatMessages(params: GetChatMessages$Params, context?: HttpContext): Observable<Array<MessageResponse>> {
+  getChatMessages(
+    params: GetChatMessages$Params,
+    context?: HttpContext,
+  ): Observable<Array<MessageResponse>> {
     return this.getChatMessages$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<MessageResponse>>): Array<MessageResponse> => r.body)
+      map((r: StrictHttpResponse<Array<MessageResponse>>): Array<MessageResponse> => r.body),
     );
   }
-
 }

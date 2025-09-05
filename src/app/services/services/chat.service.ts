@@ -33,7 +33,10 @@ export class ChatService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getUserChats$Response(params?: GetUserChats$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ChatResponse>>> {
+  getUserChats$Response(
+    params?: GetUserChats$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<Array<ChatResponse>>> {
     return getUserChats(this.http, this.rootUrl, params, context);
   }
 
@@ -43,9 +46,12 @@ export class ChatService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getUserChats(params?: GetUserChats$Params, context?: HttpContext): Observable<Array<ChatResponse>> {
+  getUserChats(
+    params?: GetUserChats$Params,
+    context?: HttpContext,
+  ): Observable<Array<ChatResponse>> {
     return this.getUserChats$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<ChatResponse>>): Array<ChatResponse> => r.body)
+      map((r: StrictHttpResponse<Array<ChatResponse>>): Array<ChatResponse> => r.body),
     );
   }
 
@@ -58,7 +64,10 @@ export class ChatService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  createChat$Response(params: CreateChat$Params, context?: HttpContext): Observable<StrictHttpResponse<StringResponse>> {
+  createChat$Response(
+    params: CreateChat$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<StringResponse>> {
     return createChat(this.http, this.rootUrl, params, context);
   }
 
@@ -70,8 +79,7 @@ export class ChatService extends BaseService {
    */
   createChat(params: CreateChat$Params, context?: HttpContext): Observable<StringResponse> {
     return this.createChat$Response(params, context).pipe(
-      map((r: StrictHttpResponse<StringResponse>): StringResponse => r.body)
+      map((r: StrictHttpResponse<StringResponse>): StringResponse => r.body),
     );
   }
-
 }

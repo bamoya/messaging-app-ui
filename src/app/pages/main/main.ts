@@ -1,29 +1,30 @@
-
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
-import { ChatList } from '../../components/chat-list/chat-list';
-import { ChatResponse, MessageRequest, MessageResponse } from '../../services/models';
-import { KeycloakService } from '../../utils/keycloak/KeycloakService';
-import { WebSocketService } from '../../services/web-socket.service';
-import { ChatStateService } from '../../services/chat-state.service';
-import { MessageStateService } from '../../services/message-state.service';
 import { Observable } from 'rxjs';
 import { ChatContentComponent } from '../../components/chat-content/chat-content';
+import { ChatHeader } from '../../components/chat-header/chat-header';
 import { ChatInputComponent } from '../../components/chat-input/chat-input';
-import { MessageService } from '../../services/services';
+import { ChatList } from '../../components/chat-list/chat-list';
+import { ChatStateService } from '../../services/chat-state.service';
+import { MessageStateService } from '../../services/message-state.service';
+import { ChatResponse, MessageRequest, MessageResponse } from '../../services/models';
 import { NotificationService } from '../../services/notification.service';
-import { ChatHeader } from "../../components/chat-header/chat-header";
+import { MessageService } from '../../services/services';
+import { WebSocketService } from '../../services/web-socket.service';
+import { KeycloakService } from '../../utils/keycloak/KeycloakService';
 
 @Component({
   selector: 'app-main',
-  imports: [ChatList, CommonModule, PickerComponent, FormsModule, ChatContentComponent, ChatInputComponent, ChatHeader],
+  imports: [
+    ChatList,
+    CommonModule,
+    FormsModule,
+    ChatContentComponent,
+    ChatInputComponent,
+    ChatHeader,
+  ],
   templateUrl: './main.html',
   styleUrl: './main.scss',
   standalone: true,
@@ -39,7 +40,7 @@ export class Main implements OnInit, OnDestroy {
     private messageStateService: MessageStateService,
     private messageService: MessageService,
     private keycloak: KeycloakService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.chats$ = this.chatStateService.chats$;
     this.selectedChat$ = this.chatStateService.selectedChat$;
@@ -82,9 +83,7 @@ export class Main implements OnInit, OnDestroy {
             },
           })
           .subscribe(() => {
-            this.messageStateService.loadMessages(
-              this.chatStateService.selectedChat.id as string,
-            );
+            this.messageStateService.loadMessages(this.chatStateService.selectedChat.id as string);
           });
       }
     };

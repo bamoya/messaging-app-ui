@@ -6,29 +6,29 @@ For more information about the overall project architecture, see the [root READM
 
 ## Key Components
 
-*   **`main` page:** The main component that orchestrates the different parts of the chat application.
-*   **`chat-list` component:** Displays the list of chats for the current user.
-*   **Services:**
-    *   `ChatService`, `MessageService`, `UserService`: These services are generated from the backend's OpenAPI specification and are used to communicate with the API.
-    *   `KeycloakService`: Initializes and manages the Keycloak instance for authentication.
-*   **Interceptors:**
-    *   `KeycloakHttpInterceptor`: Intercepts outgoing HTTP requests and adds the Keycloak access token to the `Authorization` header.
-*   **API Client Generation:** The `ng-openapi-gen` tool is used to generate the API client code from the `openapi.json` file. This ensures that the frontend and backend are always in sync.
+- **`main` page:** The main component that orchestrates the different parts of the chat application.
+- **`chat-list` component:** Displays the list of chats for the current user.
+- **Services:**
+  - `ChatService`, `MessageService`, `UserService`: These services are generated from the backend's OpenAPI specification and are used to communicate with the API.
+  - `KeycloakService`: Initializes and manages the Keycloak instance for authentication.
+- **Interceptors:**
+  - `KeycloakHttpInterceptor`: Intercepts outgoing HTTP requests and adds the Keycloak access token to the `Authorization` header.
+- **API Client Generation:** The `ng-openapi-gen` tool is used to generate the API client code from the `openapi.json` file. This ensures that the frontend and backend are always in sync.
 
 ## Technologies Used
 
-*   **Angular**
-*   **Bootstrap**
-*   **Keycloak-js**
-*   **SockJS & STOMPjs**
-*   **ng-openapi-gen**
+- **Angular**
+- **Bootstrap**
+- **Keycloak-js**
+- **SockJS & STOMPjs**
+- **ng-openapi-gen**
 
 ## Getting Started
 
 ### Prerequisites
 
-*   Node.js and npm
-*   Angular CLI
+- Node.js and npm
+- Angular CLI
 
 ### Installation
 

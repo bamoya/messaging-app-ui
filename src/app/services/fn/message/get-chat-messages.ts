@@ -14,19 +14,22 @@ export interface GetChatMessages$Params {
   'chat-id': string;
 }
 
-export function getChatMessages(http: HttpClient, rootUrl: string, params: GetChatMessages$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
+export function getChatMessages(
+  http: HttpClient,
+  rootUrl: string,
+  params: GetChatMessages$Params,
+  context?: HttpContext,
+): Observable<StrictHttpResponse<Array<MessageResponse>>> {
   const rb = new RequestBuilder(rootUrl, getChatMessages.PATH, 'get');
   if (params) {
     rb.path('chat-id', params['chat-id'], {});
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
+  return http.request(rb.build({ responseType: 'json', accept: 'application/json', context })).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
       return r as StrictHttpResponse<Array<MessageResponse>>;
-    })
+    }),
   );
 }
 

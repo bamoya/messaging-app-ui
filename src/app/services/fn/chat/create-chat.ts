@@ -15,20 +15,23 @@ export interface CreateChat$Params {
   'recipient-id': string;
 }
 
-export function createChat(http: HttpClient, rootUrl: string, params: CreateChat$Params, context?: HttpContext): Observable<StrictHttpResponse<StringResponse>> {
+export function createChat(
+  http: HttpClient,
+  rootUrl: string,
+  params: CreateChat$Params,
+  context?: HttpContext,
+): Observable<StrictHttpResponse<StringResponse>> {
   const rb = new RequestBuilder(rootUrl, createChat.PATH, 'post');
   if (params) {
     rb.query('sender-id', params['sender-id'], {});
     rb.query('recipient-id', params['recipient-id'], {});
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
+  return http.request(rb.build({ responseType: 'json', accept: 'application/json', context })).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
       return r as StrictHttpResponse<StringResponse>;
-    })
+    }),
   );
 }
 

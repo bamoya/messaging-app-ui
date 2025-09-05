@@ -10,21 +10,23 @@ import { RequestBuilder } from '../../request-builder';
 
 import { ChatResponse } from '../../models/chat-response';
 
-export interface GetUserChats$Params {
-}
+export interface GetUserChats$Params {}
 
-export function getUserChats(http: HttpClient, rootUrl: string, params?: GetUserChats$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ChatResponse>>> {
+export function getUserChats(
+  http: HttpClient,
+  rootUrl: string,
+  params?: GetUserChats$Params,
+  context?: HttpContext,
+): Observable<StrictHttpResponse<Array<ChatResponse>>> {
   const rb = new RequestBuilder(rootUrl, getUserChats.PATH, 'get');
   if (params) {
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
+  return http.request(rb.build({ responseType: 'json', accept: 'application/json', context })).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
       return r as StrictHttpResponse<Array<ChatResponse>>;
-    })
+    }),
   );
 }
 

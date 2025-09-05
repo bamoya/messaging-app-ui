@@ -4,7 +4,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { keycloakHttpInterceptor } from './keycloak-http-interceptor';
 
 describe('keycloakHttpInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
+  const interceptor: HttpInterceptorFn = (req, next) =>
     TestBed.runInInjectionContext(() => keycloakHttpInterceptor(req, next));
 
   beforeEach(() => {

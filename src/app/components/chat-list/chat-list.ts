@@ -11,7 +11,7 @@ import { KeycloakService } from '../../utils/keycloak/KeycloakService';
   styleUrl: './chat-list.scss',
 })
 export class ChatList {
-  chats = input<ChatResponse[] | null >([]);
+  chats = input<ChatResponse[] | null>([]);
   searchNewContact = false;
   contacts: Array<UserResponse> = [];
   chatSelected = output<ChatResponse>();
