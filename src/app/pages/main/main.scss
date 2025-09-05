@@ -24,36 +24,16 @@
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5) 0px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.online-status {
-  background: #1fa855;
-  min-width: 10px;
-  max-width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  font-size: 0.8em;
-  font-weight: 400;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.offline-status {
-  background: #cacaca;
-  min-width: 10px;
-  max-width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  font-size: 0.8em;
-  font-weight: 400;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .bg-chat {
   background-color: #efeae2;
   background-image: url('/wa_bg.png');
   background-size: contain;
+}
+
+.chat-content {
+  height: 90%;
+  min-height: 90%;
+  overflow-y: scroll;
 }
 
 .message-box {

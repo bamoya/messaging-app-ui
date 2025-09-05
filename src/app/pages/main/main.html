@@ -13,119 +13,27 @@
 
     <div class="d-flex w-100">
       <div class="col-3 overflow-x-scroll">
-        <app-chat-list [chats]="chats" (chatSelected)="onSelectChat($event)"></app-chat-list>
+        <app-chat-list
+          [chats]="chats$ | async"
+          (chatSelected)="onSelectChat($event)"
+        ></app-chat-list>
       </div>
-      @if (selectedChat.id) {
+      @if ((selectedChat$ | async)?.id) {
         <div class="col-9 d-flex flex-column">
-          <div class="d-flex flex-column justify-content-between h-100">
-            <!-- User Header -->
-            <div class="bg-gray w-100">
-              <div class="d-flex gap-2">
-                <div class="user-img">
-                  <img src="user.png" alt="" />
-                </div>
-                <div class="d-flex flex-column">
-                  <span>{{ selectedChat.name }}</span>
-                  <div class="d-flex align-items-center gap-1">
-                    @if (selectedChat.recipientOnline) {
-                      <small class="online-status"></small>
-                      <small>Online</small>
-                    } @else {
-                      <small class="ofline-status"></small>
-                      <small>Offline</small>
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Messages -->
-            <div #scrollableDiv class="h-100 bg-chat p-3 overflow-x-scroll">
-              @for (message of chatMessages; track message) {
-                @if (isSelfMessage(message)) {
-                  <div class="message-box self">
-                    <div class="d-flex flex-column">
-                      @if (message.type === 'TEXT') {
-                        <span>{{ message.content }}</span>
-                      } @else if (message.media) {
-                        <img
-                          width="200"
-                          class="cursor-pointer"
-                          [src]="'data:image/jpg;base64,' + message.media"
-                          alt=""
-                        />
-                      }
-                      <small class="text-black-50">
-                        {{ message.createdAt | date: 'HH:mm' }}&nbsp;
-                        @if (message.state === 'SENT') {
-                          <span>
-                            <i class="fas fa-check"></i>
-                          </span>
-                        } @else if (message.state === 'SEEN') {
-                          <span>
-                            <i class="fas fa-check seen"></i>
-                            <i class="fas fa-check seen ml-neg"></i>
-                          </span>
-                        }
-                      </small>
-                    </div>
-                  </div>
-                } @else {
-                  <div class="message-box friend">
-                    <div class="d-flex flex-column align-items-end">
-                      @if (message.type === 'TEXT') {
-                        <span>{{ message.content }}</span>
-                      } @else if (message.media) {
-                        <img
-                          width="200"
-                          class="cursor-pointer"
-                          [src]="'data:image/jpg;base64,' + message.media"
-                          alt=""
-                        />
-                      }
-                      <small class="text-black-50">{{ message.createdAt | date: 'HH:mm' }}</small>
-                    </div>
-                  </div>
-                }
-              }
-            </div>
-
-            <!-- Input Footer -->
-            <div class="gray-bg p-2">
-              <div class="d-flex align-items-center gap-2">
-                <i class="fas fa-paperclip cursor-pointer" (click)="inputFile.click()"></i>
-                <input
-                  #inputFile
-                  type="file"
-                  [hidden]="true"
-                  accept=".jpg, .jpeg,.png,.svg,.mp4,.mov,.mp3"
-                  (change)="uploadMedia($event.target)"
-                />
-                <i
-                  class="fa-regular fa-face-smile cursor-pointer"
-                  (click)="showEmojis = !showEmojis"
-                ></i>
-                @if (showEmojis) {
-                  <emoji-mart
-                    [darkMode]="false"
-                    class="emojis-panel"
-                    (emojiSelect)="onSelectEmojis($event)"
-                  ></emoji-mart>
-                }
-                <input
-                  type="text"
-                  class="form-control-sm w-100"
-                  placeholder="Type a message"
-                  [(ngModel)]="messageContent"
-                  (keydown)="keyDown($event)"
-                />
-                @if (messageContent) {
-                  <i class="fa-solid fa-paper-plane cursor-pointer" (click)="sendMessage()"></i>
-                } @else {
-                  <i class="fa-solid fa-microphone cursor-pointer"></i>
-                }
-              </div>
-            </div>
+          <div class="d-flex flex-column justify-content-between bg-chat h-100">
+            <app-chat-header [selectedChat]="selectedChat$ | async"> </app-chat-header>
+            <app-chat-content
+              class="h-80 overflow-scroll"
+              [selectedChat]="selectedChat$ | async"
+              [chatMessages]="messages$ | async"
+            >
+            </app-chat-content>
+            <app-chat-input
+              [selectedChat]="selectedChat$ | async"
+              (sendMessage)="sendMessage($event)"
+              (uploadMedia)="uploadMedia($event)"
+            >
+            </app-chat-input>
           </div>
         </div>
       } @else {

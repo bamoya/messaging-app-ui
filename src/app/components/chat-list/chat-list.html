@@ -27,7 +27,7 @@
   </div>
 </div>
 <div class="chat-list mt-3">
-  @if (chats().length && !searchNewContact) {
+  @if (chats()?.length && !searchNewContact) {
     @for (chat of chats() ; track chat) {
       <div
         class="d-flex align-items-center justify-content-between border-bottom-gray p-2"

@@ -1,0 +1,50 @@
+<!-- Messages -->
+<div #scrollableDiv class="chat-content p-3">
+  @for (message of chatMessages; track message) {
+    @if (isSelfMessage(message)) {
+      <div class="message-box self">
+        <div class="d-flex flex-column">
+          @if (message.type === 'TEXT') {
+            <span class="text-start w-100">{{ message.content }}</span>
+          } @else if (message.media) {
+            <img
+              width="200"
+              class="cursor-pointer"
+              [src]="'data:image/jpg;base64,' + message.media"
+              alt=""
+            />
+          }
+          <small class="text-black-50 d-flex justify-content-end gap-2">
+            {{ message.createdAt | date: 'HH:mm' }}&nbsp;
+            @if (message.state === 'SENT') {
+              <span>
+                <i class="fas fa-check"></i>
+              </span>
+            } @else if (message.state === 'SEEN') {
+              <span>
+                <i class="fas fa-check seen"></i>
+                <i class="fas fa-check seen ml-neg"></i>
+              </span>
+            }
+          </small>
+        </div>
+      </div>
+    } @else {
+      <div class="message-box friend">
+        <div class="d-flex flex-column align-items-end">
+          @if (message.type === 'TEXT') {
+            <span class="text-start w-100">{{ message.content }}</span>
+          } @else if (message.media) {
+            <img
+              width="200"
+              class="cursor-pointer"
+              [src]="'data:image/jpg;base64,' + message.media"
+              alt=""
+            />
+          }
+          <small class="text-black-50">{{ message.createdAt | date: 'HH:mm' }}</small>
+        </div>
+      </div>
+    }
+  }
+</div>

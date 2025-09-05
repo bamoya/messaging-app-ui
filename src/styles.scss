@@ -34,3 +34,29 @@ body {
     width: 100%;
   }
 }
+
+.online-status {
+  background: #1fa855;
+  min-width: 10px;
+  max-width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  font-size: 0.8em;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offline-status {
+  background: #cacaca;
+  min-width: 10px;
+  max-width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  font-size: 0.8em;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -11,7 +11,7 @@ export class KeycloakService {
 
   get keycloak () : Keycloak {
     if(!this._keycloak){
-      this._keycloak = new Keycloak({url: "http://localhost:9090",realm:"whatsapp-clone",clientId : "whatsapp-clone-app" })
+      this._keycloak = new Keycloak({url: "http://localhost:9090",realm:"messaging-app",clientId : "messaging-app" })
     }
     return this._keycloak
   }
